@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import Start from './Start';
+import End from './End';
+import {useState} from 'react'
+import { QuizContext } from './Context'
+import QueApi from './QueApi';
 
 function App() {
+  const [gameState, setGameState] = useState('start')
+  const [score, setScore] = useState(0)
+  const [limit, setLimit] = useState(5)
+  const [difficulty, setDifficulty] = useState('easy')
+  const [loading, setLoading] = useState(true)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div>
+      <QuizContext.Provider value={{gameState, setGameState, score, setScore, limit, setLimit, difficulty, setDifficulty, loading, setLoading }}>
+        {gameState === 'start' && <Start/>}
+        {gameState === 'quiz' && <QueApi/>}
+        {gameState === 'end' && <End/>}
+      </QuizContext.Provider>
+      
     </div>
   );
 }
